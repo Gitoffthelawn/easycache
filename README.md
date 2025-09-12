@@ -1,10 +1,10 @@
 # easycache
 
 * [Chrome Web Store](https://chromewebstore.google.com/detail/easycache/kcidaidcpfbkemhohngajephodacajbf)
-* [.crx file](http://gromnitsky.users.sourceforge.net/js/chrome/)
+* [.crx file](https://sigwait.org/~alex/demo/chrome/)
 
 A browser extension (manifest v3) that serves as an interface to
-various web caches or archivers (Google, Bing, Wayback Machine,
+various web caches or archivers (Bing, Wayback Machine,
 archive.is). You can add another providers.
 
 ## Compilation
