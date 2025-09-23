@@ -4,11 +4,16 @@
 <title>EasyCache Options</title>
 
 <style type="text/css">
-  body {
-    min-width: 700px;
-    margin: 10px;
+  @media screen and (min-width: 801px) {
+    body {
+      width: 800px;
+      margin: 10px auto;
+    }
   }
+  body { font-family: sans-serif; }
+  table { width: 100%; }
   input[type="search"] { width: 100%; }
+  tr td:nth-child(3) > input[type="search"] { font-family: monospace; }
   td { text-align: center; }
   td.cp__item__predefined,
   td.cp__item__input { padding: 0 4px; }
@@ -29,7 +34,7 @@
 </style>
 
 <p>
-  Grab for ↑↓ to rearrange the items. Refresh the page to undo edits.
+  Grab 🔃️ to rearrange items. <i>Reload</i> the page to undo edits.
 </p>
 
 <form>
@@ -40,8 +45,8 @@
     <thead>
       <tr>
 	<th></th>
-	<th>Name</th>
-	<th>Webservice URL Template</th>
+	<th style="width: 25%">Name</th>
+	<th style="width: 65%">Webservice URL Template</th>
 	<th>Enc URI Comp</th>
 	<th></th>
       </tr>
@@ -52,7 +57,7 @@
   </table>
 
   <hr>
-  <input type="submit" value="Save">
+  <input type="submit" value="💾">
   <input type="button" id="cp__merge" value="Merge"
 	 title="Append the missing default entries">
   <input type="button" id="cp__reset" value="Reset"

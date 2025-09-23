@@ -1,18 +1,13 @@
 function(browser="chrome") {
   "manifest_version": 3,
   "name": "easycache",
-  "description": "An interface to various web caches or archivers (Google, Bing, Wayback Machine, archive-is). You can add another providers.",
-  "version": "3.0.2",
-  "options_ui": {
-    "page": "options.html"
-  },
+  "description": "An interface for web archivers (Wayback Machine, archive.is). Supports adding custom providers.",
+  "version": "3.1.0",
+  "options_page": "options.html",
   "permissions": [
     "contextMenus",
     "activeTab",
     "storage"
-  ],
-  "host_permissions": [
-    "https://www.bing.com/*"
   ],
   "background": if browser == "firefox" then {
     "type": "module",
