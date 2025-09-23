@@ -95,32 +95,20 @@ let efetch = function(url, opt) {
 }
 
 CacheProviders.callbacks = {
-    // retrieve the 1st cached result of the search;
-    // works as of Tue 10 Sep 20:40:22 EEST 2024
-    bing: async function(query) {
-        let doc = await dom('https://www.bing.com/search?q=%s', query)
-        let div = doc.querySelector('div.b_attribution')
-        let p = div.getAttribute('u').split('|')
-        return `http://cc.bingj.com/cache.aspx?q=${query}&d=${p[2]}&w=${p[3]}`
+    google_translate: async function(query) {
+        // FIXME: investigate how to pass a non-standard port
+        let u = new URL(query)
+        u.host = u.hostname.replaceAll('-', '--').replaceAll('.', '-')
+            + '.translate.goog'
+        u.protocol = 'https'
+        u.searchParams.set('_x_tr_sl', 'auto')
+        u.searchParams.set('_x_tr_tl', 'en')
+        u.searchParams.set('_x_tr_pto', 'wapp')
+        return u.toString()
     },
 }
 
 CacheProviders.def = [
-    {
-	name: "Google",
-	tmpl: 'https://webcache.googleusercontent.com/search?q=cache:%s',
-	encode: 1
-    },
-    {
-	name: "Google text only",
-	tmpl: 'https://webcache.googleusercontent.com/search?q=cache:%s&strip=1',
-	encode: 1
-    },
-    {
-	name: "Bing",
-	cb: 'bing'
-    },
-    { separator: 1 },
     {
 	name: "Wayback Machine",
 	tmpl: 'https://web.archive.org/web/*/%s',
@@ -135,7 +123,12 @@ CacheProviders.def = [
         name: 'archive.is: capture a webpage',
         tmpl: 'https://archive.is/?run=1&url=%s',
         encode: 1
-    }
+    },
+    { separator: 1 },
+    {
+        name: "Google Translate",
+        cb: 'google_translate'
+    },
 ]
 
 export let menu = function(cp, skip_non_template_based) {

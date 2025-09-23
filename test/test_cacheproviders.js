@@ -7,7 +7,7 @@ let rejects = async function(fn) { // chai doesn't have assert.rejects()
     let failed = 0
     try {
 	await fn()
-    } catch(e) {
+    } catch(_) {
 	++failed
     }
     assert(failed, `${fn.name} wasn't rejected`)
@@ -19,9 +19,9 @@ suite('CacheProviders', function() {
     setup(function() {
 	this.storage = new Storage()
 	this.cp = new cache_providers.CacheProviders(this.storage)
-	this.bing_idx = 2
-	this.separator_idx = 6
-	this.total = 8
+	this.google_translate_idx = 5
+	this.separator_idx = 2
+	this.total = 6
 	chrome.runtime.lastError = null
 	cache_providers.CacheProviders.def = [...providers]
     })
@@ -36,7 +36,7 @@ suite('CacheProviders', function() {
 	p.push({name: 'new2', id: 'new2-456'})
 
 	await this.cp.load()
-	assert.equal(this.cp.findIndex('Google'), -1)
+	assert.equal(this.cp.findIndex('Wayback Machine'), -1)
 	assert.equal(this.cp.findIndex('new1'), -1)
 	assert.equal(this.cp.findIndex('new2'), -1)
 	let before = this.cp.get().length
@@ -44,7 +44,7 @@ suite('CacheProviders', function() {
 	this.cp.merge()
 
 	assert.equal(this.cp.get().length, before + 3 + 1)
-	assert(this.cp.findIndex('Google') !== -1)
+	assert(this.cp.findIndex('Wayback Machine') !== -1)
 	assert(this.cp.findIndex('new1') !== -1)
 	assert(this.cp.findIndex('new2') !== -1)
     })
@@ -61,7 +61,7 @@ suite('CacheProviders', function() {
 	await this.cp.load()
 
 	assert.equal(this.cp.get().length, this.total)
-	assert.equal(this.cp.get()[this.bing_idx].name, "Bing")
+	assert.equal(this.cp.get()[this.google_translate_idx].name, "Google Translate")
     })
 
     test('load is failing', async function() {
@@ -113,14 +113,14 @@ suite('CacheProviders', function() {
 
     test('findIndex', async function() {
 	await this.cp.load()
-	assert.equal(this.cp.findIndex('Bing'), this.bing_idx)
+	assert.equal(this.cp.findIndex('Google Translate'), this.google_translate_idx)
 	assert.equal(this.cp.findIndex('omglol'), -1)
     })
 
     test('is_sep', async function() {
 	await this.cp.load()
 	assert(this.cp.is_sep(this.separator_idx))
-	assert(!this.cp.is_sep(this.bing_idx))
+	assert(!this.cp.is_sep(this.google_translate_idx))
     })
 
     test('url', async function() {
